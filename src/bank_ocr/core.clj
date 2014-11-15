@@ -49,7 +49,7 @@
    following the three lines of spaces, |, and _ is expected to be included in the
    lines arg despite it being ignored."
   [lines]
-  (map #(NUMBERS %)
+  (map #(or (NUMBERS %) \?)
        (apply map *
               (map (fn [parse-fn line]
                      (map parse-fn (partition 3 line)))
@@ -75,11 +75,21 @@
   (let [lines (-> (slurp fname) (clojure.string/split #"\n"))]
     (map parse-account-number (partition 4 lines))))
 
+(defn create-account-number-line
+  "Examines the passed in account number and returns the string to be written
+   to the output file."
+  [acct-number]
+  (let [acct-str (apply str acct-number)]
+    (cond
+      (some #(= \? %) acct-number) (str acct-str " ILL\n")
+      (not (check-account-number acct-number)) (str acct-str " ERR\n")
+      :else (str acct-str "\n"))))
+
 (defn write-file
   "Write an output file containing the numeric values of the bank-ocr input format.
    account-numbers -> output from the parse-file function"
   [fname account-numbers]
-  (let [str-account-numbers (apply str (map #(str (apply str %) "\n") account-numbers))
+  (let [str-account-numbers (apply str (map create-account-number-line account-numbers))
         out-fname (str fname ".out")]
     (spit out-fname str-account-numbers)))
 
