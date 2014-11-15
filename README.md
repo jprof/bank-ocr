@@ -1,36 +1,23 @@
 # bank-ocr
 
-FIXME: description
+Bank-OCR Programming Exercise
 
 ## Installation
 
-Download from http://example.com/FIXME.
+`git clone https://github.com/jprof/bank-ocr`
 
 ## Usage
 
-FIXME: explanation
+To run, use `lein run <input-file-name>`. This will output a file with the name
+`<input-file-name>.out` containing the parsed results. Please see commit
+messages/comments for more information. Example input is available in the
+resources directory.
 
-    $ java -jar bank-ocr-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+The test can be ran via `lein test`.
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 jprof
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
