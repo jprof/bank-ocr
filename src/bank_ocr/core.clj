@@ -56,6 +56,17 @@
                    [top-parser mid-parser bot-parser]
                    lines))))
 
+(defn check-account-number
+  "Compute a checksum on the account number, returning true if account number
+   is valid and false otherwise."
+  [acct-number]
+  (->> acct-number
+      reverse
+      (map-indexed (fn [i v] (* (inc i) v)))
+      (reduce +)
+      ((fn [v] (mod v 11)))
+      (= 0)))
+
 (defn parse-file
   "Read in an input file with account numbers encoded as |, _ and spaces. Parse the
    numeric values from this input, returning a seq of account numbers of the format:

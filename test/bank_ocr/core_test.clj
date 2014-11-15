@@ -19,6 +19,14 @@
   ||_  _|  | _||_|  ||_| _|
                            ")
 
+(def valid-account-numbers [[7 1 1 1 1 1 1 1 1]
+                            [1 2 3 4 5 6 7 8 9]
+                            [4 9 0 8 6 7 7 1 5]])
+
+(def invalid-account-numbers [[8 8 8 8 8 8 8 8 8]
+                              [4 9 0 0 6 7 7 1 5]
+                              [0 1 2 3 4 5 6 7 8]])
+
 (defn split-lines
   [s]
   (clojure.string/split s #"\n"))
@@ -44,3 +52,11 @@
           expected-results (slurp (clojure.java.io/resource "user-story-1-expected-output"))
           actual-results (slurp (clojure.java.io/resource "user-story-1-testcases.out"))]
       (is (= expected-results actual-results)))))
+
+(deftest verify-valid-account-numbers
+  (testing "Verify checksum agains known valid account numbers"
+    (is (apply = true (map check-account-number valid-account-numbers)))))
+
+(deftest verify-invalid-account-numbers
+  (testing "Verify checksum agains known valid account numbers"
+    (is (apply = false (map check-account-number invalid-account-numbers)))))
